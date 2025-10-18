@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}الصفحة الرئيسية - Plus Academy{% endblock %}
+
+{% block content %}
+
+<!-- رسائل الموقع -->
+<div id="messages-container">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} shadow-sm mb-2 animate__animated animate__fadeInLeft"
+                 role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+<!-- Hero Section -->
+<header class="hero d-flex flex-column justify-content-center align-items-center text-center text-white">
+    <h1 class="fw-bold display-4 animate__animated animate__fadeInDown">Plus Academy</h1>
+    <p class="lead animate__animated animate__fadeInUp">تعليم يواكب المستقبل</p>
+    <a href="{% url 'courses' %}" class="btn btn-warning btn-lg mt-3 animate__animated animate__fadeInUp animate__delay-1s">
+        ابدأ التعلم الآن 🚀
+    </a>
+</header>
+
+<!-- Courses Section -->
+<section id="courses" class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5 fw-bold">أشهر الكورسات</h2>
+        <div class="row g-4">
+            {% for course in courses %}
+            <div class="col-md-4">
+                <div class="card course-card shadow-sm border-0 h-100">
+                    <img src="{{ course.image.url }}" class="card-img-top" alt="{{ course.title }}">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title fw-bold">{{ course.title }}</h5>
+                        <p class="card-text flex-grow-1">{{ course.description|truncatewords:20 }}</p>
+                        <a href="{% url 'course_detail' course.id %}" class="btn btn-primary mt-auto">عرض التفاصيل</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-center text-muted">لا توجد كورسات حالياً</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Hero Styling */
+    .hero {
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                    url('https://images.pexels.com/photos/1181676/pexels-photo-1181676.jpeg') no-repeat center center/cover;
+        height: 80vh;
+    }
+
+    /* Course Cards */
+    .course-card img {
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .course-card:hover {
+        transform: translateY(-5px);
+        transition: all 0.3s ease-in-out;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    /* رسائل عائمة */
+    #messages-container {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1050; /* أعلى من كل العناصر */
+        width: 280px;
+    }
+
+    #messages-container .alert {
+        border-radius: 10px;
+        padding: 12px 16px;
+        font-size: 14px;
+        animation: fadeOut 1s ease-in-out forwards;
+        animation-delay: 5s; /* تختفي بعد 5 ثواني */
+    }
+
+    @keyframes fadeOut {
+        to { opacity: 0; transform: translateX(-20px); }
+    }
+</style>
+
+<!-- إضافة مكتبة أنيميشن -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+{% endblock %}

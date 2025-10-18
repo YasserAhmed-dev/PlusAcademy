@@ -1,0 +1,103 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm sticky-top">
+    <div class="container">
+        <!-- الشعار -->
+        <a class="navbar-brand fw-bold d-flex align-items-center" href="{% url 'home' %}">
+            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png" alt="Logo" width="40" class="me-2 rounded-circle bg-light p-1">
+            Plus Academy
+        </a>
+
+        <!-- زر القائمة في الموبايل -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- روابط القائمة -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto align-items-center">
+                {% if user.is_authenticated %}
+                    <!-- لو المستخدم مسجل دخول -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'profile' %}">👤 ملفي</a>
+                    </li>
+                {% else %}
+                    <!-- لو المستخدم مش مسجل -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">🔑 تسجيل الدخول</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'create_user' %}">📝 إنشاء حساب</a>
+                    </li>
+                {% endif %}
+                <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'home' %}active fw-bold{% endif %}" href="{% url 'home' %}">🏠 الرئيسية</a></li>
+                <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'courses' %}active fw-bold{% endif %}" href="{% url 'courses' %}">📚 الكورسات</a></li>
+                {% if user.is_authenticated and user.is_staff %}
+                    <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'manage_courses_lessons' %}active fw-bold{% endif %}" href="{% url 'manage' %}">🛠️ إدارة الكورسات والدروس</a></li>
+                <!-- <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'add_courses' %}active fw-bold{% endif %}" href="{% url 'add_courses' %}">➕ إضافة كورس</a></li>
+                <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'add_lesson' %}active fw-bold{% endif %}" href="{% url 'add_lesson' %}">🎥 إضافة درس</a></li> -->
+                {% endif %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">ℹ️ من نحن</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">📩 تواصل معنا</a></li>
+                {% if user.is_authenticated and user.is_staff %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'messages_list' %}active fw-bold{% endif %}" href="{% url 'messages_list' %}">📨 الرسائل</a>
+                    </li>
+                {% endif %}
+                {% if user.is_authenticated %}
+                    <!-- لو المستخدم مسجل دخول -->
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="{% url 'logout' %}">🚪 تسجيل الخروج</a>
+                    </li>
+                {% endif %}
+                <!-- زر الوضع الليلي -->
+                <li class="nav-item">
+                    <button id="theme-toggle" class="btn btn-outline-light ms-3">🌙</button>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<style>
+    .navbar-nav .nav-link {
+        transition: 0.3s;
+    }
+    .navbar-nav .nav-link:hover {
+        background: rgba(255,255,255,0.2);
+        border-radius: 6px;
+    }
+
+    /* الوضع الليلي */
+    body.dark-mode {
+        background-color: #121212;
+        color: white;
+    }
+    body.dark-mode .navbar {
+        background-color: #1f1f1f !important;
+    }
+    body.dark-mode a, body.dark-mode .nav-link {
+        color: white !important;
+    }
+</style>
+
+<script>
+    const toggleBtn = document.getElementById("theme-toggle");
+    const body = document.body;
+
+    // لو المستخدم اختار الوضع الليلي قبل كده
+    if (localStorage.getItem("theme") === "dark") {
+        body.classList.add("dark-mode");
+        toggleBtn.textContent = "☀️";
+    }
+
+    toggleBtn.addEventListener("click", () => {
+        body.classList.toggle("dark-mode");
+        if (body.classList.contains("dark-mode")) {
+            localStorage.setItem("theme", "dark");
+            toggleBtn.textContent = "☀️";
+        } else {
+            localStorage.setItem("theme", "light");
+            toggleBtn.textContent = "🌙";
+        }
+    });
+</script>

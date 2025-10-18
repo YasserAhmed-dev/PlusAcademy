@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}تواصل معنا - Plus Academy{% endblock %}
+
+{% block content %}
+<div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center" style="margin-top:70px;">
+
+  <div class="row w-100 justify-content-center">
+    <!-- الفورم -->
+    <div class="col-lg-6 col-md-8 col-11">
+      <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-body p-5">
+          <!-- العنوان -->
+          <div class="text-center mb-4">
+            <h1 class="fw-bold">تواصل معنا</h1>
+            <p class="text-muted">يسعدنا الرد على استفساراتك ومقترحاتك في أسرع وقت.</p>
+          </div>
+
+          <form method="POST" action="{% url 'contact' %}" class="needs-validation" novalidate>
+            {% csrf_token %}
+
+            <div class="mb-3">
+              <label for="name" class="form-label">الاسم الكامل</label>
+              <input type="text" class="form-control" id="name" name="name" placeholder="اكتب اسمك" required>
+              <div class="invalid-feedback">من فضلك أدخل الاسم.</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="phone" class="form-label">رقم الهاتف</label>
+              <input type="text" class="form-control" id="phone" name="phone" placeholder="اكتب رقم هاتفك" required>
+              <div class="invalid-feedback">من فضلك أدخل رقم الهاتف.</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">البريد الإلكتروني</label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="you@email.com" required>
+              <div class="invalid-feedback">رجاءً أدخل بريدًا صحيحًا.</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="subject" class="form-label">الموضوع</label>
+              <input type="text" class="form-control" id="subject" name="subject" placeholder="موضوع الرسالة" required>
+              <div class="invalid-feedback">اكتب موضوع الرسالة.</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="message" class="form-label">نص الرسالة</label>
+              <textarea class="form-control" id="message" name="message" rows="5" placeholder="اكتب رسالتك هنا..." required></textarea>
+              <div class="invalid-feedback">اكتب رسالتك.</div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 py-2">📨 إرسال الرسالة</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- التحقق من الفورم -->
+<script>
+(function () {
+  'use strict';
+  const forms = document.querySelectorAll('.needs-validation');
+  Array.prototype.slice.call(forms).forEach(function (form) {
+    form.addEventListener('submit', function (event) {
+      if (!form.checkValidity()) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      form.classList.add('was-validated');
+    }, false);
+  });
+})();
+</script>
+{% endblock %}
+

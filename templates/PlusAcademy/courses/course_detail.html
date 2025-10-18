@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-3">
+    <!-- عنوان الكورس -->
+    <h1 class="mb-4 text-center fw-bold text-primary">{{ course.title }}</h1>
+
+    <!-- فيديو المقدمة أو الصورة -->
+    {% if course.intro_video %}
+        <div class="media-container mb-4">
+            <video class="media-player" controls poster="{{ course.image.url }}">
+                <source src="{{ course.intro_video.url }}" type="video/mp4">
+                متصفحك لا يدعم تشغيل الفيديو.
+            </video>
+        </div>
+    {% elif course.image %}
+        <div class="media-container mb-4">
+            <img src="{{ course.image.url }}" class="media-player" alt="{{ course.title }}">
+        </div>
+    {% else %}
+        <div class="alert alert-warning text-center">لا يوجد فيديو مقدمة أو صورة للكورس.</div>
+    {% endif %}
+
+    <!-- وصف الكورس -->
+    <div class="card p-4 shadow-sm mb-5">
+        <h4 class="mb-3 text-primary">عن الكورس</h4>
+        <p class="text-muted" style="line-height: 1.8;">{{ course.description }}</p>
+    </div>
+
+    <!-- قائمة الدروس -->
+    <h3 class="mb-4">📚 قائمة الدروس</h3>
+    <div class="list-group">
+        {% for lesson in course.lessons.all %}
+            <a href="{% url 'lesson_detail' lesson.id %}" 
+               class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-play-circle-fill text-success me-2"></i> {{ lesson.title }} </span>
+                <span class="badge bg-primary rounded-pill">🎥</span>
+            </a>
+        {% empty %}
+            <div class="alert alert-secondary">لا توجد دروس بعد.</div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- تحسينات CSS -->
+<style>
+    h1 {
+    margin-top: 5px; /* بدل 10px بالقيمة اللي تعجبك */
+    }
+    header, nav {
+    margin-bottom: 10px; /* أو أي قيمة أصغر */
+    }
+    .media-container {
+        position: relative;
+        max-width: 800px;
+        height: 450px;
+        margin: auto;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+
+    .media-player {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .list-group-item:hover {
+        background-color: #f8f9fa;
+        transform: translateX(-3px);
+        transition: 0.2s;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}إضافة درس جديد - Plus Academy{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-success text-white text-center">
+            <h3 class="mb-0">➕ إضافة درس جديد</h3>
+        </div>
+        <div class="card-body p-4">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <!-- اختيار الكورس -->
+                <div class="mb-3">
+                    <label for="course" class="form-label fw-bold">📚 اختر الكورس</label>
+                    <select id="course" name="course" class="form-select" required>
+                        <option value="" disabled selected>اختر الكورس</option>
+                        {% for course in courses %}
+                            <option value="{{ course.id }}">{{ course.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- عنوان الدرس -->
+                <div class="mb-3">
+                    <label for="title" class="form-label fw-bold">📝 عنوان الدرس</label>
+                    <input type="text" id="title" name="title" class="form-control" placeholder="أدخل عنوان الدرس" required>
+                </div>
+
+                <!-- وصف الدرس -->
+                <div class="mb-3">
+                    <label for="description" class="form-label fw-bold">📜 وصف الدرس</label>
+                    <textarea id="description" name="description" class="form-control" rows="4" placeholder="أدخل وصف الدرس"></textarea>
+                </div>
+
+                <!-- فيديو الدرس -->
+                <div class="mb-3">
+                    <label for="video" class="form-label fw-bold">🎥 فيديو الدرس</label>
+                    <input type="file" id="video" name="video" class="form-control" accept="video/*" required>
+                </div>
+
+                <!-- ملفات إضافية -->
+                <div class="mb-3"> 
+                    <label for="attachment" class="form-label fw-bold">📄 ملفات الدرس (اختياري)</label>
+                    <input type="file" id="attachment" name="attachment" class="form-control" 
+                           accept=".pdf,.doc,.docx,.ppt,.pptx" multiple>
+                    <small class="text-muted">يمكنك رفع ملفات PDF أو Word أو PowerPoint</small>
+                </div>
+
+                <!-- زر الحفظ -->
+                <button type="submit" class="btn btn-success w-100 fw-bold">
+                    💾 حفظ الدرس
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        max-width: 600px;
+        margin: auto;
+        border-radius: 15px;
+    }
+    .form-control:focus, .form-select:focus {
+        box-shadow: 0 0 8px rgba(0,123,255,0.3);
+        border-color: #80bdff;
+    }
+    /* الوضع الليلي */
+body.dark-mode .card,
+body.dark-mode .form-control,
+body.dark-mode textarea,
+body.dark-mode input {
+    color: #ffffff !important; /* نص أبيض */
+    background-color: #2c2c2c !important; /* خلفية داكنة */
+    border-color: rgba(255,255,255,0.2) !important;
+}
+
+/* النصوص داخل الفورم */
+body.dark-mode .form-control::placeholder {
+    color: #bbbbbb !important; /* لون رمادي فاتح للـ placeholder */
+}
+</style>
+{% endblock %}
