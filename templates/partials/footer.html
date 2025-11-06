@@ -1,0 +1,68 @@
+<footer class="footer-custom mt-5 pt-4 pb-2">
+    <div class="container">
+        <div class="row text-center text-md-start">
+            <!-- القسم الأول -->
+            <div class="col-md-4 mb-3">
+                <h5 class="fw-bold">Plus Academy</h5>
+                <p>أكاديميتك لتعلم أحدث المهارات والدورات التدريبية عبر الإنترنت بسهولة وبجودة عالية.</p>
+            </div>
+
+            <!-- القسم الثاني -->
+            <div class="col-md-4 mb-3">
+                <h5 class="fw-bold">روابط سريعة</h5>
+                <ul class="list-unstyled">
+                    <li><a href="{% url 'home' %}">🏠 الرئيسية</a></li>
+                    <li><a href="{% url 'courses' %}">📚 الكورسات</a></li>
+                    <li><a href="{% url 'about' %}">ℹ️ من نحن</a></li>
+                    <li><a href="{% url 'contact' %}">📩 تواصل معنا</a></li>
+                </ul>
+            </div>
+
+            <!-- القسم الثالث -->
+            <div class="col-md-4 mb-3">
+                <h5 class="fw-bold">تابعنا</h5>
+                <a href="https://www.facebook.com/yasser.ahmed.654205" target="_blank"><i class="bi bi-facebook"></i></a>
+                <a href="https://www.instagram.com/yasserahmed7820" target="_blank"><i class="bi bi-instagram"></i></a>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="text-center py-0">
+            &copy; 2025 Plus Academy - جميع الحقوق محفوظة
+        </div>
+    </div>
+</footer>
+
+<style>
+/* الوضع العادي */
+.footer-custom {
+    background-color: #212529;
+    color: white;
+}
+.footer-custom a {
+    color: white;
+    text-decoration: none;
+}
+.footer-custom hr {
+    background-color: rgba(255,255,255,0.2);
+}
+.footer-custom a:hover {
+    color: #ffc107;
+}
+
+/* الوضع الليلي */
+body.dark-mode .footer-custom {
+    background-color: #1f1f1f;
+    color: #ddd;
+}
+body.dark-mode .footer-custom a {
+    color: #ddd;
+}
+body.dark-mode .footer-custom a:hover {
+    color: #ffc107;
+}
+body.dark-mode .footer-custom hr {
+    background-color: rgba(255,255,255,0.3);
+}
+</style>

@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}إضافة كورس جديد - Plus Academy{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-primary text-white text-center">
+            <h3 class="mb-0">➕ إضافة كورس جديد</h3>
+        </div>
+        <div class="card-body p-4">
+            <form action="{% url 'add_courses' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <!-- اسم الكورس -->
+                <div class="mb-3">
+                    <label for="title" class="form-label fw-bold">📌 اسم الكورس</label>
+                    <input type="text" name="title" id="title" class="form-control" placeholder="أدخل اسم الكورس" required>
+                </div>
+
+                <!-- وصف الكورس -->
+                <div class="mb-3">
+                    <label for="description" class="form-label fw-bold">📝 وصف الكورس</label>
+                    <textarea name="description" id="description" rows="4" class="form-control" placeholder="اكتب وصفًا مختصرًا للكورس" required></textarea>
+                </div>
+
+                <!-- صورة الكورس -->
+                <div class="mb-3">
+                    <label for="image" class="form-label fw-bold">🖼 صورة الكورس</label>
+                    <input type="file" name="image" id="image" class="form-control" accept="image/*" required>
+                </div>
+
+                <!-- زر الإرسال -->
+                <button type="submit" class="btn btn-success w-100 fw-bold">
+                    ✅ إضافة الكورس
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        max-width: 600px;
+        margin: auto;
+        border-radius: 15px;
+    }
+    .form-control:focus {
+        box-shadow: 0 0 8px rgba(0,123,255,0.3);
+        border-color: #80bdff;
+    }
+    /* الوضع الليلي */
+body.dark-mode .card,
+body.dark-mode .form-control,
+body.dark-mode textarea,
+body.dark-mode input {
+    color: #ffffff !important; /* نص أبيض */
+    background-color: #2c2c2c !important; /* خلفية داكنة */
+    border-color: rgba(255,255,255,0.2) !important;
+}
+
+/* النصوص داخل الفورم */
+body.dark-mode .form-control::placeholder {
+    color: #bbbbbb !important; /* لون رمادي فاتح للـ placeholder */
+}
+
+</style>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- عنوان الدرس -->
+    <h2 class="mb-4 text-center fw-bold text-primary">{{ lesson.title }}</h2>
+
+    <!-- فيديو الدرس -->
+    {% if lesson.video %}
+        <div class="video-container mb-4">
+            <video class="video-player" controls poster="{{ lesson.course.image.url }}">
+                <source src="{{ lesson.video.url }}" type="video/mp4">
+                متصفحك لا يدعم تشغيل الفيديو.
+            </video>
+        </div>
+    {% else %}
+        <div class="alert alert-warning text-center">
+            🎥 لا يوجد فيديو لهذا الدرس حاليًا.
+        </div>
+    {% endif %}
+    {% if lesson.description or lesson.attachment %}
+    <!-- وصف الدرس -->
+    <div class="card p-4 shadow-sm mb-4">
+        {% if lesson.description %}
+        <h4 class="text-primary mb-3">📖 عن الدرس</h4>
+        <p class="text-muted" style="line-height: 1.8;">{{ lesson.description }}</p>
+        {% endif %}
+        {% if lesson.attachment %}
+            <a href="{% url 'lesson_attachment' lesson.id %}" class="btn btn-outline-success mt-3">
+                📄 تحميل ملف الدرس
+            </a>
+        
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <!-- زر العودة -->
+    <div class="text-center">
+        <a href="{% url 'course_detail' lesson.course.id %}" class="btn btn-secondary mt-3">
+            ⬅ العودة للكورس
+        </a>
+    </div>
+</div>
+
+<style>
+    .video-container {
+        position: relative;
+        max-width: 900px;
+        height: 500px;
+        margin: auto;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+
+    .video-player {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .btn-outline-success {
+        border-width: 2px;
+        font-weight: bold;
+    }
+
+    .btn-outline-success:hover {
+        background-color: #198754;
+        color: #fff;
+    }
+</style>
+{% endblock %}

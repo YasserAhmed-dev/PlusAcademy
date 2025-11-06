@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white text-center fw-bold">
+          ✏️ تعديل الملف الشخصي
+        </div>
+        <div class="card-body">
+          <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label class="form-label">👤 اسم المستخدم</label>
+              <input type="text" name="username" value="{{ user.username }}" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">📧 البريد الإلكتروني</label>
+              <input type="email" name="email" value="{{ user.email }}" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">📱 رقم الهاتف</label>
+              <input type="text" name="phone" value="{{ user.phone }}" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">🖼 صورة البروفايل</label>
+              <input type="file" name="profile_pic" class="form-control">
+              {% if user.profile_pic %}
+                <small class="text-muted">الصورة الحالية:</small><br>
+                <img src="{{ user.profile_pic.url }}" width="80" class="mt-2 rounded">
+              {% endif %}
+            </div>
+            <button type="submit" class="btn btn-success w-100 fw-bold">💾 حفظ التعديلات</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

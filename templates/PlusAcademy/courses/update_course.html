@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}تعديل كورس - Plus Academy{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="card p-4 shadow-lg">
+        <h3 class="mb-3 text-center">✏️ تعديل الكورس</h3>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label">📌 الاسم</label>
+                <input type="text" name="title" class="form-control" value="{{ course.title }}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">📝 الوصف</label>
+                <textarea name="description" class="form-control" rows="3">{{ course.description }}</textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">🖼 صورة</label>
+                <input type="file" name="image" class="form-control">
+                {% if course.image %}
+                    <p class="mt-2">الصورة الحالية: <img src="{{ course.image.url }}" width="100"></p>
+                {% endif %}
+            </div>
+            <button type="submit" class="btn btn-success w-100">💾 حفظ التعديلات</button>
+        </form>
+    </div>
+</div>
+<style>
+    .card { border-radius: 15px; }
+    .form-control:focus, .form-select:focus {
+        box-shadow: 0 0 8px rgba(0,123,255,0.3);
+        border-color: #80bdff;
+    }
+    body.dark-mode .card,
+    body.dark-mode .form-control,
+    body.dark-mode textarea,
+    body.dark-mode input {
+        color: #fff !important;
+        background-color: #2c2c2c !important;
+    }
+</style>
+{% endblock %}

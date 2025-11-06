@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="d-flex align-items-center justify-content-center vh-100 bg-light">
+  <div class="text-center">
+
+    <!-- صورة البروفايل -->
+    {% if user.profile_pic %}
+      <img src="{{ user.profile_pic.url }}" alt="صورة البروفايل" 
+           class="rounded-circle shadow-lg mb-4"
+           style="width: 220px; height: 220px; object-fit: cover; border: 6px solid #fff;">
+    {% else %}
+      <img src="https://via.placeholder.com/220" alt="صورة افتراضية" 
+           class="rounded-circle shadow-lg mb-4"
+           style="width: 220px; height: 220px; object-fit: cover; border: 6px solid #fff;">
+    {% endif %}
+
+    <!-- اسم المستخدم -->
+    <h1 class="fw-bold mb-3">{{ user.username }}</h1>
+
+    <!-- البريد الإلكتروني -->
+    <p class="fs-5 text-muted mb-2"><i class="bi bi-envelope"></i> {{ user.email }}</p>
+
+    <!-- رقم الهاتف -->
+    {% if user.phone %}
+      <p class="fs-5 text-muted mb-4"><i class="bi bi-telephone"></i> {{ user.phone }}</p>
+    {% else %}
+      <p class="fs-5 text-muted mb-4">📱 لم يتم إدخال رقم الهاتف</p>
+    {% endif %}
+
+    <!-- روابط -->
+    <div class="d-flex justify-content-center gap-3 flex-wrap">
+      <a href="{% url 'edit_profile' %}" class="btn btn-lg btn-primary px-4">✏️ تعديل الملف الشخصي</a>
+      <a href="{% url 'change_password' %}" class="btn btn-lg btn-warning px-4">🔑 تغيير كلمة المرور</a>
+      <a href="{% url 'delete_account' %}" class="btn btn-lg btn-danger px-4" 
+         onclick="return confirm('⚠️ هل أنت متأكد أنك تريد حذف حسابك نهائياً؟')">🗑 حذف الحساب</a>
+      <a href="{% url 'logout' %}" class="btn btn-lg btn-secondary px-4">🚪 تسجيل الخروج</a>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
